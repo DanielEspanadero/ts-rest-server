@@ -9,8 +9,14 @@ const Usuario = db.define('usuario', {
         type: DataTypes.STRING
     },
     estado: {
-        type: DataTypes.BOOLEAN
+        type: DataTypes.BOOLEAN,
+        defaultValue: 1
     }
-});
+},
+    {
+        timestamps: true,
+        updatedAt: false,
+        createdAt: false
+    });
 
 export default Usuario;

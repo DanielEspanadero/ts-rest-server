@@ -3,8 +3,8 @@ import { getUsuario, getUsuarios, postUsuario, putUsuario, deleteUsuario } from 
 
 const router = Router();
 
-router.get('/', getUsuario);
-router.get('/:id', getUsuarios);
+router.get('/', getUsuarios);
+router.get('/:id', getUsuario);
 router.post('/', postUsuario);
 router.put('/:id', putUsuario);
 router.delete('/:id', deleteUsuario);

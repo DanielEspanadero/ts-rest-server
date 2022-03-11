@@ -1,28 +1,42 @@
 import { Request, Response } from 'express';
+import { json } from 'sequelize/types';
 import Usuario from '../models/usuario';
 
 export const getUsuarios = async (req: Request, res: Response) => {
 
     const usuarios = await Usuario.findAll();
 
-    res.json({
-        msg: 'getUsuarios'
-    });
+    res.json({ usuarios });
 };
 
-export const getUsuario = (req: Request, res: Response) => {
+export const getUsuario = async (req: Request, res: Response) => {
     const { id } = req.params;
-    res.json({
-        msg: 'getUsuario'
-    });
+    const usuario = await Usuario.findByPk(id);
+    if (usuario) {
+        res.json(usuario);
+    } else {
+        res.status(404).json({
+            msg: `No existe un usuario con el id ${id}`
+        });
+    }
 };
 
-export const postUsuario = (req: Request, res: Response) => {
+export const postUsuario = async (req: Request, res: Response) => {
     const { body } = req;
-    res.json({
-        msg: 'postUsuario',
-        body
-    });
+    try {
+
+        const usuario = Usuario.build(body);
+        await usuario.save()
+        res.json(usuario);
+
+    } catch (error) {
+
+        console.log(error);
+        res.status(500).json({
+            msg: 'Hable con el administrador'
+        })
+
+    }
 };
 
 export const putUsuario = (req: Request, res: Response) => {

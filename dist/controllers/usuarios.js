@@ -16,25 +16,36 @@ exports.deleteUsuario = exports.putUsuario = exports.postUsuario = exports.getUs
 const usuario_1 = __importDefault(require("../models/usuario"));
 const getUsuarios = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const usuarios = yield usuario_1.default.findAll();
-    res.json({
-        msg: 'getUsuarios'
-    });
+    res.json({ usuarios });
 });
 exports.getUsuarios = getUsuarios;
-const getUsuario = (req, res) => {
+const getUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    res.json({
-        msg: 'getUsuario'
-    });
-};
+    const usuario = yield usuario_1.default.findByPk(id);
+    if (usuario) {
+        res.json(usuario);
+    }
+    else {
+        res.status(404).json({
+            msg: `No existe un usuario con el id ${id}`
+        });
+    }
+});
 exports.getUsuario = getUsuario;
-const postUsuario = (req, res) => {
+const postUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { body } = req;
-    res.json({
-        msg: 'postUsuario',
-        body
-    });
-};
+    try {
+        const usuario = usuario_1.default.build(body);
+        yield usuario.save();
+        res.json(usuario);
+    }
+    catch (error) {
+        console.log(error);
+        res.status(500).json({
+            msg: 'Hable con el administrador'
+        });
+    }
+});
 exports.postUsuario = postUsuario;
 const putUsuario = (req, res) => {
     const { id } = req.params;
