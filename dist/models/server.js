@@ -28,6 +28,7 @@ class Server {
         this.listen();
         this.routes();
     }
+    ;
     dbConnection() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -39,6 +40,7 @@ class Server {
             }
         });
     }
+    ;
     middlewares() {
         // CORS
         this.app.use((0, cors_1.default)());

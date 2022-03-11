@@ -8,7 +8,7 @@ class Server {
     private port: string;
     private apiPaths = {
         usuarios: '/api/usuarios'
-    }
+    };
 
     constructor() {
         this.app = express();
@@ -18,7 +18,7 @@ class Server {
         this.middlewares();
         this.listen();
         this.routes();
-    }
+    };
 
     async dbConnection() {
         try {
@@ -27,7 +27,7 @@ class Server {
         } catch (error: any) {
             throw new Error(error)
         }
-    }
+    };
 
     middlewares() {
 
